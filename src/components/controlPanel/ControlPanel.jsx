@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from '../../App.module.css';
+import { AppContext } from '../../context';
 
-export const ControlPanel = ({ createTodo, isLoading, isSort, setIsSort }) => {
+export const ControlPanel = () => {
 	const [title, setTitle] = useState('');
+	const { createTodo, isLoading, isSort, setIsSort } = useContext(AppContext);
 
 	const handleAddTodo = () => {
 		if (title.trim()) {
@@ -36,7 +38,7 @@ export const ControlPanel = ({ createTodo, isLoading, isSort, setIsSort }) => {
 						onClick={handleAddTodo}
 						className={styles.button}
 					>
-						Добавить дело
+						🖌 Добавить дело
 					</button>
 				</div>
 			</form>
@@ -45,7 +47,7 @@ export const ControlPanel = ({ createTodo, isLoading, isSort, setIsSort }) => {
 					className={styles['sort-button']}
 					onClick={() => setIsSort(!isSort)}
 				>
-					{!isSort ? 'Отмена сортировки' : 'Сортировать по алфавиту'}
+					{!isSort ? '✖ Отмена сортировки' : '✔ Сортировать по алфавиту'}
 				</button>
 			</div>
 		</>

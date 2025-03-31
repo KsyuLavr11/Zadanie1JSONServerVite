@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AppContext } from '../../context';
 import styles from '../../App.module.css';
 
-export const TodoItemEdition = ({ updateTodo, todo, deleteTodo }) => {
+export const TodoItemEdition = () => {
+	const { updateTodo, todo, deleteTodo } = useContext(AppContext);
+
 	const [isEditing, seIsEditing] = useState(false);
-	const [editTitle, setEditTitle] = useState(todo.title);
+	const [editTitle, setEditTitle] = useState(todo);
 
 	const handleSaveEdit = () => {
 		updateTodo(todo.id, editTitle);
@@ -24,31 +27,31 @@ export const TodoItemEdition = ({ updateTodo, todo, deleteTodo }) => {
 						className={styles['button-todos-cancel']}
 						onClick={() => seIsEditing(false)}
 					>
-						Отменить
+						🛇 Отменить
 					</button>
 
 					<button
 						className={styles['button-todos-save']}
 						onClick={handleSaveEdit}
 					>
-						Сохранить
+						🔒 Сохранить
 					</button>
 				</>
 			) : (
 				<>
-					{todo.title}
+					{todo}
 					<button
 						onClick={() => deleteTodo(todo.id)}
 						className={styles['button-todos-delete']}
 					>
-						Удалить дело
+						🗑️ Удалить дело
 					</button>
 
 					<button
 						onClick={() => seIsEditing(true)}
 						className={styles['button-todos']}
 					>
-						Изменить дело
+						✍ Изменить дело
 					</button>
 				</>
 			)}

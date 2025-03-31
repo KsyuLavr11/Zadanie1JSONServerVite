@@ -4,9 +4,10 @@ import { SearchDebounce } from './components/Search/Search.jsx';
 import { TodoList } from './components/TodoList/TodoList';
 import { useTodos } from './hooks/useTodos';
 import styles from './App.module.css';
+import { AppContext } from './context.js';
 
 export const App = () => {
-	const {
+	/*const {
 		todos,
 		isLoading,
 		error,
@@ -16,7 +17,10 @@ export const App = () => {
 		setIsSort,
 		setSearchTerm,
 		isSort,
-	} = useTodos([]);
+	} = useTodos([]);*/
+	const userData = useTodos();
+
+	const { isLoading, error, setSearchTerm } = userData;
 
 	const handleSearch = (searchTerm) => {
 		setSearchTerm(searchTerm);
@@ -29,19 +33,10 @@ export const App = () => {
 		<div className="app">
 			<h4>Список дел</h4>
 			<SearchDebounce onChange={handleSearch} />
-			<ControlPanel
-				createTodo={createTodo}
-				isLoading={isLoading}
-				isSort={isSort}
-				setIsSort={setIsSort}
-				setSearchTerm={setSearchTerm}
-			/>
-			<TodoList
-				todos={todos}
-				updateTodo={updateTodo}
-				deleteTodo={deleteTodo}
-				isLoading={isLoading}
-			/>
+			<AppContext.Provider value={userData}>
+				<ControlPanel />
+				<TodoList />
+			</AppContext.Provider>
 		</div>
 	);
 };
